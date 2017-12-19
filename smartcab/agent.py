@@ -20,6 +20,7 @@ class LearningAgent(Agent):
         self.alpha = alpha       # Learning factor
         self.epsilon_decay_rate = 0.01
         self.trials = 1
+        self.acons = 0.999
 
         ###########
         ## TO DO ##
@@ -39,11 +40,14 @@ class LearningAgent(Agent):
         # self.epsilon = math.pow(self.alpha, self.trials)
         # self.epsilon = 1.0 / (self.trials * self.trials)
         # self.epsilon -= math.exp(-self.alpha * self.trials)
-        self.epsilon = self.epsilon * 0.995
+        # self.epsilon = self.epsilon * 0.995
         if testing:
             epsilon = 0
             alpha = 0
-        self.trials += 1
+        else:
+            self.trials += 1
+            # self.epsilon = self.epsilon * 0.995
+            self.epsilon = math.pow(self.acons, self.trials)
         ###########
         # Update epsilon using a decay function of your choice
         # Update additional class parameters as needed
@@ -63,7 +67,7 @@ class LearningAgent(Agent):
 
         ########### 
         # state = (waypoint, inputs['light'], inputs['oncoming'], inputs['right'], inputs['left'])
-        state = (waypoint, inputs['light'], inputs['oncoming'], inputs['right'], inputs['left'])
+        state = (waypoint, inputs['light'], inputs['oncoming'])
 
         ###########
         
