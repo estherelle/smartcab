@@ -46,8 +46,11 @@ class LearningAgent(Agent):
             alpha = 0
         else:
             self.trials += 1
-            # self.epsilon = self.epsilon * 0.995
-            self.epsilon = math.pow(self.acons, self.trials)
+            self.epsilon = 1.0 / (self.trials * self.trials)
+        
+        
+            # self.epsilon = self.epsilon * 0.99
+            # self.epsilon = math.pow(self.acons, self.trials)
         ###########
         # Update epsilon using a decay function of your choice
         # Update additional class parameters as needed
@@ -216,7 +219,7 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(tolerance=0.05, n_test=350)
+    sim.run(tolerance=0.05, n_test=10)
 
 
 if __name__ == '__main__':
