@@ -46,8 +46,8 @@ class LearningAgent(Agent):
             alpha = 0
         else:
             self.trials += 1
-            self.epsilon = 1.0 / (self.trials * self.trials)
-        
+            self.epsilon = 1.0 / (self.trials * self.trials) 
+            # self.epsilon -= 0.05
         
             # self.epsilon = self.epsilon * 0.99
             # self.epsilon = math.pow(self.acons, self.trials)
@@ -70,7 +70,7 @@ class LearningAgent(Agent):
 
         ########### 
         # state = (waypoint, inputs['light'], inputs['oncoming'], inputs['right'], inputs['left'])
-        state = (waypoint, inputs['light'], inputs['oncoming'])
+        state = (waypoint, inputs['light'], inputs['oncoming'], inputs['left'])
 
         ###########
         
@@ -156,7 +156,8 @@ class LearningAgent(Agent):
             when conducting learning. """
 
         ########### 
-        self.Q[state][action] = self.alpha * reward + (1 - self.alpha) * self.Q[state][action]
+        if self.learning:
+            self.Q[state][action] = self.alpha * reward + (1 - self.alpha) * self.Q[state][action]
 
         ###########
         # When learning, implement the value iteration update rule
